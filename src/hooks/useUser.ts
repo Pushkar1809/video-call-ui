@@ -35,7 +35,6 @@ export const useUser = () => {
 
 	// Remove user form active list
 	const removeUser = (id: number) => {
-    console.log(activeUsers);
 		const removedUser = activeUsers.filter((user: User) => user.id === id)[0];
 		if (!removedUser) {
 			return;
