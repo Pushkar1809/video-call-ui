@@ -32,14 +32,14 @@ const UserTile = ({user, variant, add, remove}: Props) => {
 				{variant === "in-call" && (
 					<Button
 						onClick={() => remove(id)}
-						className="aspect-square h-8 rounded-lg text-red-500 p-2 bg-white/20 hover:bg-red-300/10 transition-all ease-in-out duration-200">
+						className="aspect-square h-7 rounded-lg text-red-500 p-1 border border-white/20 bg-white/0 hover:bg-red-300/30 transition-all ease-in-out duration-200">
 						<FaTimes />
 					</Button>
 				)}
 				{variant === "in-lobby" && (
 					<Button
 						onClick={() => add(id)}
-						className="aspect-square h-8 rounded-lg text-green-500 p-2 bg-white/20 hover:bg-green-300/10 transition-all ease-in-out duration-200">
+						className="aspect-square h-7 rounded-lg text-green-500 p-2 border border-white/20 bg-white/0 hover:bg-green-300/30 transition-all ease-in-out duration-200">
 						<FaPlus />
 					</Button>
 				)}
