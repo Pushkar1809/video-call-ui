@@ -14,7 +14,6 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-toggle": "^1.0.3",
     "@radix-ui/react-toggle-group": "^1.0.4",
-    "@vercel/blob": "^0.23.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "get-random-people": "^1.0.8",

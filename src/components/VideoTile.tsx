@@ -1,9 +1,17 @@
+import { useMemo, useState } from "react";
+import Video from "next-video";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+
 import { getUniqueUser } from "@/lib/data";
-import { useMemo, useState } from "react";
-import { FaMicrophone, FaMicrophoneSlash, FaVideo, FaVideoSlash } from "react-icons/fa";
-import Video from "next-video";
+
+import {
+	FaMicrophone,
+	FaMicrophoneSlash,
+	FaVideo,
+	FaVideoSlash,
+} from "react-icons/fa";
 
 interface Props {
 	index: number;
@@ -13,11 +21,14 @@ interface Props {
 	aspectRatio: "1/1" | "4/3" | "16/9";
 }
 
-const VideoTile = ({index, rows, cols, isOn, aspectRatio}: Props) => {
-  const {firstName, lastName, video, pfp} = useMemo(() => getUniqueUser(index), [index]);
-  const [isVideoOn, setIsVideoOn] = useState<boolean>(false);
-  const [isVideoMuted, setIsVideoMuted] = useState<boolean>(true);
-  return (
+const VideoTile = ({ index, rows, cols, isOn, aspectRatio }: Props) => {
+	const { firstName, lastName, video, pfp } = useMemo(
+		() => getUniqueUser(index),
+		[index],
+	);
+	const [isVideoOn, setIsVideoOn] = useState<boolean>(false);
+	const [isVideoMuted, setIsVideoMuted] = useState<boolean>(true);
+	return (
 		<div
 			style={{
 				width: cols >= rows ? `calc(${100 / cols}% - 12px)` : "auto",
@@ -28,7 +39,13 @@ const VideoTile = ({index, rows, cols, isOn, aspectRatio}: Props) => {
 			}}
 			className={`flex justify-center items-center relative bg-white/20 border border-white/20 rounded-xl transition-all ease-in-out duration-200 min-w-[15ch]`}>
 			{isVideoOn || isOn ? (
-				<Video src={video} loop autoPlay controls={false} muted={isVideoMuted}/>
+				<Video
+					src={video}
+					loop
+					autoPlay
+					controls={false}
+					muted={isVideoMuted}
+				/>
 			) : (
 				// eslint-disable-next-line @next/next/no-img-element
 				<Avatar>
@@ -73,6 +90,7 @@ const VideoTile = ({index, rows, cols, isOn, aspectRatio}: Props) => {
 				</div>
 			</div>
 		</div>
-	);};
+	);
+};
 
 export default VideoTile;

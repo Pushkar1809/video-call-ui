@@ -1,19 +1,20 @@
+import { useState } from "react";
+
 import { getUniqueUser } from "@/lib/data";
 import { User } from "@/lib/types";
-import { useState } from "react";
 
 export const useUser = () => {
 	const [activeUsers, setActiveUsers] = useState<User[]>([]);
 	const [inactiveUsers, setInactiveUsers] = useState<User[]>([]);
-  const [lastIndex, setlastIndex] = useState<number>(-1);
+	const [lastIndex, setlastIndex] = useState<number>(-1);
 
 	// Add new user to active list
 	const addNewUser = () => {
-    setlastIndex((prevIndex: number) => {
-      const newUser = getUniqueUser(prevIndex + 1);
-      setActiveUsers([...activeUsers, newUser]);
-      return prevIndex + 1;
-    });
+		setlastIndex((prevIndex: number) => {
+			const newUser = getUniqueUser(prevIndex + 1);
+			setActiveUsers([...activeUsers, newUser]);
+			return prevIndex + 1;
+		});
 	};
 
 	// Get user with id
@@ -53,4 +54,4 @@ export const useUser = () => {
 		getUserById,
 		addInactiveUser,
 	};
-}
+};

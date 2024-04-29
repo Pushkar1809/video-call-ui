@@ -1,6 +1,8 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+
 import { User } from "@/lib/types";
+
 import { FaPlus, FaTimes } from "react-icons/fa";
 
 interface Props {

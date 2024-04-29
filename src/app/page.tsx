@@ -61,9 +61,11 @@ export default function Home() {
 
 	// Calculating number of columns
 	const cols = useMemo(() => Math.ceil(Math.sqrt(endIndex - startIndex)), [endIndex, startIndex]);
+
   return (
 		<main className="flex h-screen flex-col items-center p-5 gap-5 overflow-hidden">
 			<div className="flex flex-1 w-full items-center transition-all ease-in-out duration-200 overflow-hidden">
+
 				{/* Video Grid */}
 				<div
 					ref={videoSpaceRef}
@@ -112,6 +114,7 @@ export default function Home() {
 						</div>
 					)}
 				</div>
+
 				{/* sidebar */}
 				<div
 					style={{
