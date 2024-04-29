@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import Video from "next-video";
+import BackgroundVideo from "next-video/background-video";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -39,7 +40,7 @@ const VideoTile = ({ index, rows, cols, isOn, aspectRatio }: Props) => {
 			}}
 			className={`flex justify-center items-center relative bg-white/20 border border-white/20 rounded-xl transition-all ease-in-out duration-200 min-w-[15ch]`}>
 			{isVideoOn || isOn ? (
-				<Video
+				<BackgroundVideo
 					src={video}
 					loop
 					autoPlay
