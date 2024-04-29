@@ -25,6 +25,8 @@ export default function Home() {
 	const [isDummyVideoOn, setIsDummyVideoOn] = useState<boolean>(true);
 	const [isDummyAudioOn, setIsDummyAudioOn] = useState<boolean>(true);
 	const videoSpaceRef = useRef<HTMLDivElement>(null);
+
+	// Calculate Maximum cells there can be per page
 	const maxCells = useMemo(() => {
 		if (!videoSpaceRef.current) return 49;
 		const { clientHeight, clientWidth } = videoSpaceRef.current;
@@ -34,6 +36,8 @@ export default function Home() {
 		const maxCols = Math.floor(clientWidth / 160);
 		return Math.min(maxRows * maxCols, activeUsers.length, 49);
 	}, [activeUsers.length, ar]);
+
+	// Calculating number of columns
 	const cols = useMemo(() => Math.ceil(Math.sqrt(maxCells)), [maxCells]);
   return (
 		<main className="flex h-screen flex-col items-center p-5 gap-5 overflow-hidden">

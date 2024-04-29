@@ -1,8 +1,9 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { getUniqueUser } from "@/lib/data";
-import { RefObject, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { FaMicrophone, FaMicrophoneSlash, FaVideo, FaVideoSlash } from "react-icons/fa";
+import Video from "next-video";
 
 interface Props {
 	index: number;
@@ -27,9 +28,7 @@ const VideoTile = ({index, rows, cols, isOn, aspectRatio}: Props) => {
 			}}
 			className={`flex justify-center items-center relative bg-white/20 border border-white/20 rounded-xl transition-all ease-in-out duration-200 min-w-[15ch]`}>
 			{isVideoOn || isOn ? (
-				<video autoPlay loop muted={isVideoMuted} className="rounded-xl">
-					<source src={video} type="video/mp4" />
-				</video>
+				<Video src={video} loop autoPlay controls={false} muted={isVideoMuted}/>
 			) : (
 				// eslint-disable-next-line @next/next/no-img-element
 				<Avatar>

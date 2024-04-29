@@ -1,3 +1,9 @@
+import sample1 from "/videos/sample1.mp4";
+import sample2 from "/videos/sample2.mp4";
+import sample3 from "/videos/sample3.mp4";
+import sample4 from "/videos/sample4.mp4";
+import sample5 from "/videos/sample5.mp4";
+
 export const getUniqueUser = (index: number) => {
 	const data = {
 		firstNames: [
@@ -62,11 +68,11 @@ export const getUniqueUser = (index: number) => {
 		],
 	};
 	const sampleVideoStream = [
-		"/sample1.mp4",
-		"/sample2.mp4",
-		"/sample3.mp4",
-		"/sample4.mp4",
-		"/sample5.mp4",
+		sample1,
+		sample2,
+		sample3,
+		sample4,
+		sample5
 	];
 
 	const firstName = data.firstNames[index % data.firstNames.length];
