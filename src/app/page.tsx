@@ -1,6 +1,17 @@
 "use client";
-import { Button } from '@/components/ui/button';
+
 import { useMemo, useRef, useState } from 'react';
+
+import { useUser } from "@/hooks/useUser";
+import { User } from "@/lib/types";
+
+import { Button } from "@/components/ui/button";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { Separator } from "@/components/ui/separator";
+
+import VideoTile from "@/components/VideoTile";
+import UserTile from "@/components/UserTile";
+
 import {
 	FaVideo,
 	FaVideoSlash,
@@ -8,37 +19,48 @@ import {
 	FaMicrophoneSlash,
 	FaTimes,
 	FaUser,
+	FaChevronLeft,
+	FaChevronRight,
 } from "react-icons/fa";
 import { GiDiplodocus } from "react-icons/gi";
-import VideoTile from '../components/VideoTile';
-import UserTile from '../components/UserTile';
-import { User } from '@/lib/types';
-import { Separator } from '@/components/ui/separator';
-import { useUser } from '@/hooks/useUser';
-import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 
 export default function Home() {
 	const { activeUsers, inactiveUsers, addNewUser, removeUser, addInactiveUser } = useUser();
-	const [ isAllVideoOn, setIsAllVideoOn ] = useState<boolean>(false);
+
+	const [isAllVideoOn, setIsAllVideoOn] = useState<boolean>(false);
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
 	const [ar, setAr] = useState<"1/1" | "4/3" | "16/9">("16/9");
+	const [page, setPage] = useState<number>(0);
+
 	const [isDummyVideoOn, setIsDummyVideoOn] = useState<boolean>(true);
 	const [isDummyAudioOn, setIsDummyAudioOn] = useState<boolean>(true);
+	
 	const videoSpaceRef = useRef<HTMLDivElement>(null);
 
 	// Calculate Maximum cells there can be per page
 	const maxCells = useMemo(() => {
 		if (!videoSpaceRef.current) return 49;
+
 		const { clientHeight, clientWidth } = videoSpaceRef.current;
+
 		const maxRows = Math.floor(
 			clientHeight / (ar === "1/1" ? 160 : ar === "4/3" ? 120 : 90),
 		);
 		const maxCols = Math.floor(clientWidth / 160);
+
 		return Math.min(maxRows * maxCols, activeUsers.length, 49);
 	}, [activeUsers.length, ar]);
 
+	const numberOfPages = useMemo(() => Math.ceil(activeUsers.length / maxCells), [activeUsers.length, maxCells])
+
+	const startIndex = useMemo(() => page * maxCells, [maxCells, page]);
+	const endIndex = useMemo(
+		() => Math.min(startIndex + maxCells, activeUsers.length),
+		[activeUsers.length, maxCells, startIndex],
+	);
+
 	// Calculating number of columns
-	const cols = useMemo(() => Math.ceil(Math.sqrt(maxCells)), [maxCells]);
+	const cols = useMemo(() => Math.ceil(Math.sqrt(endIndex - startIndex)), [endIndex, startIndex]);
   return (
 		<main className="flex h-screen flex-col items-center p-5 gap-5 overflow-hidden">
 			<div className="flex flex-1 w-full items-center transition-all ease-in-out duration-200 overflow-hidden">
@@ -50,14 +72,28 @@ export default function Home() {
 						height: "calc(100vh - 6rem)",
 						alignContent: "center",
 					}}
-					className="gap-1 w-full p-5 flex flex-wrap items-center justify-center place-items-center transition-all ease-in-out duration-200 mt-[-0.5rem]">
+					className="relative gap-1 w-full p-5 flex flex-wrap items-center justify-center place-items-center transition-all ease-in-out duration-200 mt-[-0.5rem]">
+					{page > 0 && numberOfPages > 1 && (
+						<Button
+							onClick={() => setPage(page - 1)}
+							className="absolute top-[50%] left-3 text-black bg-white/80 rounded-lg w-7 h-7 p-0 hover:bg-white transition-all ease-in-out duration-200">
+							<FaChevronLeft />
+						</Button>
+					)}
+					{page < numberOfPages - 1 && numberOfPages > 1 && (
+						<Button
+							onClick={() => setPage(page + 1)}
+							className="absolute top-[50%] right-3 text-black bg-white/80 rounded-lg w-7 h-7 p-0 hover:bg-white transition-all ease-in-out duration-200">
+							<FaChevronRight />
+						</Button>
+					)}
 					{activeUsers.length > 0 ? (
 						activeUsers
-							.slice(0, 49)
+							.slice(startIndex, endIndex)
 							.map((user: User) => (
 								<VideoTile
 									cols={cols}
-									rows={Math.ceil(maxCells / cols)}
+									rows={Math.ceil((endIndex - startIndex) / cols)}
 									index={user.id}
 									isOn={isAllVideoOn}
 									aspectRatio={ar}
